@@ -1,10 +1,30 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [chatOpen, setChatOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: '', telegram: '', service: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    setTimeout(() => {
+      toast({
+        title: '✅ Заявка отправлена!',
+        description: 'Мы свяжемся с вами в ближайшее время через Telegram.',
+      });
+      setFormData({ name: '', telegram: '', service: '', message: '' });
+      setIsSubmitting(false);
+    }, 1000);
+  };
 
   const services = [
     {
@@ -93,13 +113,13 @@ const Index = () => {
           </p>
           <div className="flex gap-4 justify-center animate-slide-up">
             <Button size="lg" className="text-lg" asChild>
-              <a href="https://t.me/sozdaybota">
+              <a href="https://t.me/zakaz_bot">
                 <Icon name="Send" size={24} className="mr-2" />
                 Заказать бота
               </a>
             </Button>
             <Button size="lg" variant="outline" className="text-lg" asChild>
-              <a href="#services">Смотреть услуги</a>
+              <a href="#contact">Оставить заявку</a>
             </Button>
           </div>
         </div>
@@ -175,7 +195,7 @@ const Index = () => {
           </div>
           <div className="mt-8 text-center">
             <Button size="lg" asChild>
-              <a href="https://t.me/sozdaybota">
+              <a href="https://t.me/zakaz_bot">
                 <Icon name="MessageCircle" size={20} className="mr-2" />
                 Обсудить проект
               </a>
@@ -209,24 +229,124 @@ const Index = () => {
       </section>
 
       <section id="contact" className="py-20 px-6 bg-muted/30 relative">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Готовы создать <span className="text-primary">своего бота?</span>
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Напишите нам в Telegram для бесплатной консультации
-          </p>
-          <Button size="lg" className="text-lg animate-glow" asChild>
-            <a href="https://t.me/sozdaybota">
-              <Icon name="Send" size={24} className="mr-2" />
-              Написать в Telegram
-            </a>
-          </Button>
-          <div className="mt-12 p-6 bg-card/50 backdrop-blur rounded-lg border border-border inline-block">
-            <p className="text-sm text-muted-foreground mb-2">Свяжитесь с нами:</p>
-            <a href="https://t.me/sozdaybota" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors font-mono">
-              @sozdaybota
-            </a>
+        <div className="container mx-auto max-w-5xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Готовы создать <span className="text-primary">своего бота?</span>
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Оставьте заявку или напишите нам в Telegram
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <Card className="bg-card/50 backdrop-blur border-primary/30">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                  <Icon name="FileText" size={28} className="text-primary" />
+                  Оставить заявку
+                </h3>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Ваше имя</label>
+                    <Input
+                      placeholder="Иван"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                      className="bg-background/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Telegram</label>
+                    <Input
+                      placeholder="@username"
+                      value={formData.telegram}
+                      onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
+                      required
+                      className="bg-background/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Тип бота</label>
+                    <Input
+                      placeholder="Например: Бот для оплаты"
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      required
+                      className="bg-background/50"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Описание задачи</label>
+                    <Textarea
+                      placeholder="Расскажите подробнее о вашем проекте..."
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      required
+                      className="bg-background/50 min-h-[100px]"
+                    />
+                  </div>
+                  <Button type="submit" className="w-full" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Icon name="Loader2" size={20} className="mr-2 animate-spin" />
+                        Отправка...
+                      </>
+                    ) : (
+                      <>
+                        <Icon name="Send" size={20} className="mr-2" />
+                        Отправить заявку
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            <div className="space-y-6">
+              <Card className="bg-card/50 backdrop-blur border-primary/30">
+                <CardContent className="p-8">
+                  <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <Icon name="MessageCircle" size={28} className="text-secondary" />
+                    Или напишите в Telegram
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    Свяжитесь с нами напрямую для быстрой консультации
+                  </p>
+                  <Button size="lg" className="w-full animate-glow" asChild>
+                    <a href="https://t.me/zakaz_bot">
+                      <Icon name="Send" size={24} className="mr-2" />
+                      Написать @zakaz_bot
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card/50 backdrop-blur border-border">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <Icon name="Clock" size={24} className="text-primary mt-1" />
+                    <div>
+                      <h4 className="font-bold mb-1">Быстрый ответ</h4>
+                      <p className="text-sm text-muted-foreground">Отвечаем в течение 1 часа</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card/50 backdrop-blur border-border">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <Icon name="Shield" size={24} className="text-primary mt-1" />
+                    <div>
+                      <h4 className="font-bold mb-1">Гарантия качества</h4>
+                      <p className="text-sm text-muted-foreground">Исправления в течение 30 дней</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/10 rounded-full blur-[150px] -z-10"></div>
@@ -255,7 +375,7 @@ const Index = () => {
                 Здравствуйте! Напишите нам в Telegram для консультации по созданию ботов.
               </p>
               <Button className="w-full" asChild>
-                <a href="https://t.me/sozdaybota">
+                <a href="https://t.me/zakaz_bot">
                   <Icon name="MessageCircle" size={18} className="mr-2" />
                   Открыть Telegram
                 </a>
