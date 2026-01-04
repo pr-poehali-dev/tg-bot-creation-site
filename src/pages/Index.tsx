@@ -87,12 +87,19 @@ const Index = () => {
             <a href="#pricing" className="hover:text-primary transition-colors">Прайс</a>
             <a href="#portfolio" className="hover:text-primary transition-colors">Портфолио</a>
             <Link to="/reviews" className="hover:text-primary transition-colors">Отзывы</Link>
+            <a href="https://t.me/sozdaybota" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Канал</a>
             <a href="#contact" className="hover:text-primary transition-colors">Контакты</a>
           </div>
           <div className="flex gap-2">
             <Button onClick={() => setChatOpen(true)} className="animate-glow">
               <Icon name="MessageCircle" size={20} className="mr-2" />
               Консультация
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/login">
+                <Icon name="LogIn" size={20} className="mr-2" />
+                Вход
+              </Link>
             </Button>
             <Link to="/admin">
               <Button variant="ghost" size="icon" className="opacity-20 hover:opacity-100">
@@ -128,7 +135,7 @@ const Index = () => {
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="text-lg" asChild>
-              <a href="https://t.me/CKA3AllHET">
+              <a href="https://t.me/ZAKAZBOTOVADMINS">
                 <Icon name="Send" size={24} className="mr-2" />
                 Написать в Telegram
               </a>
@@ -207,7 +214,7 @@ const Index = () => {
           </div>
           <div className="mt-8 text-center">
             <Button size="lg" asChild>
-              <a href="https://t.me/CKA3AllHET">
+              <a href="https://t.me/ZAKAZBOTOVADMINS">
                 <Icon name="MessageCircle" size={20} className="mr-2" />
                 Обсудить проект
               </a>
@@ -327,9 +334,9 @@ const Index = () => {
                     Свяжитесь с нами напрямую для быстрой консультации
                   </p>
                   <Button size="lg" className="w-full animate-glow" asChild>
-                    <a href="https://t.me/CKA3AllHET">
+                    <a href="https://t.me/ZAKAZBOTOVADMINS">
                       <Icon name="Send" size={24} className="mr-2" />
-                      Написать @CKA3AllHET
+                      Написать @ZAKAZBOTOVADMINS
                     </a>
                   </Button>
                 </CardContent>
@@ -387,7 +394,7 @@ const Index = () => {
                 Здравствуйте! Напишите нам в Telegram для консультации по созданию ботов.
               </p>
               <Button className="w-full" asChild>
-                <a href="https://t.me/CKA3AllHET">
+                <a href="https://t.me/ZAKAZBOTOVADMINS">
                   <Icon name="MessageCircle" size={18} className="mr-2" />
                   Открыть Telegram
                 </a>

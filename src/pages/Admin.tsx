@@ -41,6 +41,8 @@ const Admin = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [editingPortfolio, setEditingPortfolio] = useState<Portfolio | null>(null);
+  const [isAddingService, setIsAddingService] = useState(false);
+  const [newService, setNewService] = useState<Partial<Service>>({ icon: 'Bot', title: '', price: '', description: '', features: [] });
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -99,6 +101,28 @@ const Admin = () => {
       toast({ title: '✅ Услуга обновлена' });
       setEditingService(null);
     }
+  };
+
+  const handleAddService = () => {
+    if (newService.title && newService.price && newService.description) {
+      const service: Service = {
+        id: services.length + 1,
+        icon: newService.icon || 'Bot',
+        title: newService.title,
+        price: newService.price,
+        description: newService.description,
+        features: newService.features || []
+      };
+      setServices([...services, service]);
+      toast({ title: '✅ Услуга добавлена' });
+      setNewService({ icon: 'Bot', title: '', price: '', description: '', features: [] });
+      setIsAddingService(false);
+    }
+  };
+
+  const handleDeleteService = (id: number) => {
+    setServices(services.filter(s => s.id !== id));
+    toast({ title: '✅ Услуга удалена' });
   };
 
   const handleSavePortfolio = () => {
@@ -178,6 +202,64 @@ const Admin = () => {
             </TabsList>
 
             <TabsContent value="services">
+              <div className="mb-6">
+                <Button onClick={() => setIsAddingService(true)} className="w-full">
+                  <Icon name="Plus" size={20} className="mr-2" />
+                  Добавить новую услугу
+                </Button>
+              </div>
+
+              {isAddingService && (
+                <Card className="bg-primary/5 border-primary/30 mb-4">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold mb-4">Новая услуга</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Иконка (lucide icon name)</label>
+                        <Input
+                          value={newService.icon}
+                          onChange={(e) => setNewService({ ...newService, icon: e.target.value })}
+                          placeholder="Bot, MessageSquare, CreditCard..."
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Название *</label>
+                        <Input
+                          value={newService.title}
+                          onChange={(e) => setNewService({ ...newService, title: e.target.value })}
+                          placeholder="Название услуги"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Цена *</label>
+                        <Input
+                          value={newService.price}
+                          onChange={(e) => setNewService({ ...newService, price: e.target.value })}
+                          placeholder="1000₽ или от 1500₽"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium mb-2 block">Описание *</label>
+                        <Textarea
+                          value={newService.description}
+                          onChange={(e) => setNewService({ ...newService, description: e.target.value })}
+                          placeholder="Описание услуги"
+                        />
+                      </div>
+                      <div className="flex gap-2">
+                        <Button onClick={handleAddService} className="flex-1">
+                          <Icon name="Check" size={20} className="mr-2" />
+                          Добавить
+                        </Button>
+                        <Button variant="outline" onClick={() => setIsAddingService(false)} className="flex-1">
+                          Отмена
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
               <div className="space-y-4">
                 {services.map((service) => (
                   <Card key={service.id} className="bg-card/50 backdrop-blur">
@@ -211,10 +293,15 @@ const Admin = () => {
                             <p className="text-2xl font-bold text-primary font-mono mb-2">{service.price}</p>
                             <p className="text-sm text-muted-foreground">{service.description}</p>
                           </div>
-                          <Button onClick={() => setEditingService(service)}>
-                            <Icon name="Pencil" size={20} className="mr-2" />
-                            Редактировать
-                          </Button>
+                          <div className="flex gap-2">
+                            <Button onClick={() => setEditingService(service)}>
+                              <Icon name="Pencil" size={20} className="mr-2" />
+                              Редактировать
+                            </Button>
+                            <Button variant="destructive" onClick={() => handleDeleteService(service.id)}>
+                              <Icon name="Trash2" size={20} />
+                            </Button>
+                          </div>
                         </div>
                       )}
                     </CardContent>
