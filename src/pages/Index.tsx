@@ -122,13 +122,16 @@ const Index = () => {
           </p>
           <div className="flex gap-4 justify-center animate-slide-up">
             <Button size="lg" className="text-lg" asChild>
-              <a href="https://t.me/CKA3AllHET">
-                <Icon name="Send" size={24} className="mr-2" />
-                Заказать бота
-              </a>
+              <Link to="/register">
+                <Icon name="CreditCard" size={24} className="mr-2" />
+                Заказать с оплатой
+              </Link>
             </Button>
             <Button size="lg" variant="outline" className="text-lg" asChild>
-              <a href="#contact">Оставить заявку</a>
+              <a href="https://t.me/CKA3AllHET">
+                <Icon name="Send" size={24} className="mr-2" />
+                Написать в Telegram
+              </a>
             </Button>
           </div>
         </div>
