@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
@@ -81,16 +82,24 @@ const Index = () => {
             <Icon name="Bot" className="text-primary" size={32} />
             <span className="text-2xl font-bold font-mono">BotCreator</span>
           </div>
-          <div className="hidden md:flex gap-8">
+          <div className="hidden md:flex gap-8 items-center">
             <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
             <a href="#pricing" className="hover:text-primary transition-colors">Прайс</a>
             <a href="#portfolio" className="hover:text-primary transition-colors">Портфолио</a>
+            <Link to="/reviews" className="hover:text-primary transition-colors">Отзывы</Link>
             <a href="#contact" className="hover:text-primary transition-colors">Контакты</a>
           </div>
-          <Button onClick={() => setChatOpen(true)} className="animate-glow">
-            <Icon name="MessageCircle" size={20} className="mr-2" />
-            Консультация
-          </Button>
+          <div className="flex gap-2">
+            <Button onClick={() => setChatOpen(true)} className="animate-glow">
+              <Icon name="MessageCircle" size={20} className="mr-2" />
+              Консультация
+            </Button>
+            <Link to="/admin">
+              <Button variant="ghost" size="icon" className="opacity-20 hover:opacity-100">
+                <Icon name="Settings" size={20} />
+              </Button>
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -109,7 +118,7 @@ const Index = () => {
           <p className="text-xl text-muted-foreground mb-8 animate-slide-up">
             Разработка ботов для продаж, оплаты, модерации и любых задач.
             <br />
-            От 500₽ • Готово за 1-3 дня
+            От 500₽ • <span className="text-primary font-bold">Готово за 1 час - 2 дня</span>
           </p>
           <div className="flex gap-4 justify-center animate-slide-up">
             <Button size="lg" className="text-lg" asChild>
