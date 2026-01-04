@@ -122,7 +122,7 @@ const Index = () => {
           </p>
           <div className="flex gap-4 justify-center animate-slide-up">
             <Button size="lg" className="text-lg" asChild>
-              <a href="https://t.me/zakaz_bot">
+              <a href="https://t.me/CKA3AllHET">
                 <Icon name="Send" size={24} className="mr-2" />
                 Заказать бота
               </a>
@@ -204,7 +204,7 @@ const Index = () => {
           </div>
           <div className="mt-8 text-center">
             <Button size="lg" asChild>
-              <a href="https://t.me/zakaz_bot">
+              <a href="https://t.me/CKA3AllHET">
                 <Icon name="MessageCircle" size={20} className="mr-2" />
                 Обсудить проект
               </a>
@@ -324,9 +324,9 @@ const Index = () => {
                     Свяжитесь с нами напрямую для быстрой консультации
                   </p>
                   <Button size="lg" className="w-full animate-glow" asChild>
-                    <a href="https://t.me/zakaz_bot">
+                    <a href="https://t.me/CKA3AllHET">
                       <Icon name="Send" size={24} className="mr-2" />
-                      Написать @zakaz_bot
+                      Написать @CKA3AllHET
                     </a>
                   </Button>
                 </CardContent>
@@ -384,7 +384,7 @@ const Index = () => {
                 Здравствуйте! Напишите нам в Telegram для консультации по созданию ботов.
               </p>
               <Button className="w-full" asChild>
-                <a href="https://t.me/zakaz_bot">
+                <a href="https://t.me/CKA3AllHET">
                   <Icon name="MessageCircle" size={18} className="mr-2" />
                   Открыть Telegram
                 </a>
